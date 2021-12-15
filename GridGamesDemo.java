@@ -1,16 +1,9 @@
 public class GridGamesDemo {
-    private static final char[][] gameboard = null;
+    char[][] gameboard;
+    char temp;
     public static void main(String[] args) throws Exception {
         char [][] myGrid= createGrid(6, 6, '*');
         showGrid(myGrid);
-        writeBlock(gameboard, 0, 2,'a');
-        hWin(gameboard,'a', 3);
-        vWin(gameboard,'a', 4);
-        writeBlock(gameboard, 0, 4, 'a');
-        reverseRow(gameboard, 0, 0);
-        reverseColumn(gameboard, 0, 0);
-        blast(gameboard, 0, 0, '*');
-        scoreboard(gameboard, '*', 5);
     }
     public static char[][] createGrid(int row, int column, char symbol){
         char [][] gameboard= new char [row] [column];
@@ -60,25 +53,25 @@ public class GridGamesDemo {
             return false;
         }  
     }
-    public static void reverseRow(char [][] gameboard, int row6, int column6){
+    public static void reverseRow(char [][] gameboard, int row6, int column6, char temp){
         for(column6= 0; column6 < gameboard[row6].length/2; column6++){
-            char temp = gameboard[row6][column6];
-            gameboard[row6][column6] = gameboard[row6][gameboard[row6][gameboard[row6].length-1]];
-            temp = gameboard[row6][gameboard[row6].length-1];
+            temp = gameboard[row6][column6] = gameboard[row6][gameboard[row6][gameboard[row6].length-1]];
+            gameboard[row6][column6] = gameboard[row6][gameboard[column6][gameboard[row6].length-1]];
+            temp = gameboard[row6][gameboard[column6].length-1];
         }
     }
-    public static void reverseColumn(char [][] gameboard, int row6, int column6){
+    public static void reverseColumn(char [][] gameboard, int row6, int column6, char temp){
         for(row6 = 0; row6 <= gameboard[column6].length/2; row6++){
-            char temp = gameboard[row6][column6];
+            temp = gameboard[row6][column6];
             gameboard[row6][column6] = gameboard[row6][gameboard[row6][gameboard[column6].length-1]];
             temp = gameboard[row6][gameboard[column6].length-1];
         }
     }
     public static void blast(char [][] gameboard, int row7, int column7, char symbol2){
-        if (gameboard [row7][column7] == symbol2){
-            gameboard [row7][column7] = symbol2;
-        }else{
-            gameboard [row7][column7] = symbol2;
+        int targetRow = row7;
+        int targetColumn = column7 -1;
+        if (targetRow<gameboard.length && targetColumn< gameboard[row7][column7]){
+            gameboard[targetRow][targetColumn] = symbol2;
         }
     }
     public static void scoreboard(char [][] gameboard, char symbol3, int row8){
